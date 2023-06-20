@@ -1,1 +1,1 @@
-web: gunicorn ice_breaker.wsgi
+web: gunicorn ice_breaker:app
