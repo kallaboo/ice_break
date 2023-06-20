@@ -9,6 +9,7 @@ requests = "*"
 black = "*"
 tweepy = "*"
 flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 
