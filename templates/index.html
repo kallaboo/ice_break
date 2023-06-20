@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Everybody</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+    <div class="spinner-container" id="spinner-container" style="display: none">
+        <i id="loading-spinner" class="fas fa-spinner fa-spin"></i>
+    </div>
+</head>
+
+<body class="d-flex flex-column vh-100">
+
+    <div class="container container-main mx-auto mt-2">
+        <h1>Know Everybody</h1>
+
+        <form class="mb-3" id="name-form" action="/process" method="post">
+            <div class="form-group">
+                <label for="query">Who are you looking for?</label>
+                <input type="text" id="query" class="form-control" name="name" placeholder="Name" autofocus>    
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Let's Go!</button>
+        </form>
+
+        <div class="container p-5 mx-auto">
+
+            <h4 id="name"></h4>
+            <img id="profile-pic" class="rounded mb-2" src="" alt="">
+            <p id="summary"></p>
+            
+            <h5>Facts</h5>
+            <div id="facts"></div>
+
+            <h5>Background</h5>
+            <div id="topics-of-interest"></div>
+
+            <h5>Ice Breakers</h5>
+            <div id="ice-breakers"></div>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#name-form').on('submit', function (e) {
+                e.preventDefault();
+                $('#spinner-container').show();
+                $.ajax({
+                    url: '/process',
+                    data: $('#name-form').serialize(),
+                    type: 'POST',
+                    success: function (response) {
+                        $('#name').text(response.name);
+                        $('#profile-pic').attr('src', response.picture_url); // Update the profile picture src attribute
+                        $('#summary').text(response.summary);
+                        $('#facts').html('<ul>' + response.facts.map(fact => '<li>' + fact + '</li>').join('') + '</ul>');
+                        $('#ice-breakers').html('<ul>' + response.ice_breakers.map(ice_breaker => '<li>' + ice_breaker + '</li>').join('') + '</ul>');
+                        $('#topics-of-interest').html('<ul>' + response.interests.map(topic => '<li>' + topic + '</li>').join('') + '</ul>');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                    complete: function () {
+                        $('#spinner-container').hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
