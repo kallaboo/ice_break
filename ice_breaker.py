@@ -43,7 +43,7 @@ def ice_break(name:str)->Tuple[PersonIntel, str]:
     person_info = person_intel_parser.parse(result)
     picture_url = linkedin_data.get("profile_pic_url")
     
-    # print(person_info, picture_url)
+    print(person_info, picture_url)
     return person_info, picture_url
 
 
