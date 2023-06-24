@@ -10,6 +10,8 @@ black = "*"
 tweepy = "*"
 flask = "*"
 gunicorn = "*"
+openai = "*"
+google-search-results = "*"
 
 [dev-packages]
 
