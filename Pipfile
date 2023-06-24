@@ -12,6 +12,7 @@ flask = "*"
 gunicorn = "*"
 openai = "*"
 google-search-results = "*"
+bs4 = "*"
 
 [dev-packages]
 
